@@ -4,9 +4,6 @@ using namespace std;
 
 class Vehicle {
 
-    friend istream& operator>>(istream&, Vehicle&);
-    friend istream& operator<<(ostream&, Vehicle&);
-
 protected:
 
     bool isRented;
@@ -31,12 +28,20 @@ public:
     virtual double finalPrice() const = 0;
 
     virtual ~Vehicle() = default;
+
+    virtual void print(ostream& out){}
+    virtual void read(istream& in){}
+    friend ostream& operator<<(ostream& out, Vehicle& V)
+    {V.print(out);return out;}
+    friend istream& operator>>(istream& in, Vehicle& V)
+    {
+     V.read(in); return in;
+    }
+};
+
 };
 
 class Bike : public Vehicle {
-
-friend istream& operator>>(istream&, Bike&);
-friend istream& operator<<(ostream&, Bike&);
 
 public:
 
@@ -46,17 +51,59 @@ public:
          Vehicle(Rented,Taken,HP,brandName,price), weight(weight), gears(gears) {}
     double finalPrice() const override ;
 
+    virtual void print(ostream& out)
+{
+    {
+        cout<<"Type: Bike"<<endl;
+
+        out<<"Number of times Taken "<<timesTaken<<endl;
+        out<<"Health "<<health<<endl;
+        out<<"Brand "<<Brand<<endl;
+        out<<"Weight "<<weight<<endl;
+        out<<"Gears "<<gears<<endl;
+    }
+
+    friend ostream& operator<<(ostream& out, Bike& M)
+    {
+        M.print(out);
+        return out;
+    }
+
+    friend istream& operator<<(istream& out, Bike& M)
+    {
+        M.read(in);
+        return in;
+    }
+
+}
+
+    virtual void read(istream& in, Bike& C)
+        {
+            cout<<"Insert Bike data"<<endl;
+
+                cout<<"Is the Bike Rented: ";in>>C.isRented;in.get();
+                cout<<"How many times the bike was taken: ";in>>C.timesTaken;in.get();
+                cout<<"Bike Health: ";in>>C.health;in.get();
+                cout<<"Bike Brand: ";in>>C.brand;in.get();
+                cout<<"Weight: ";in>>C.weight;in.get();
+                cout<<"Gears: ";in>>C.gears;in,get();
+
+        return in;
+        }
+
+
+
 protected:
     int weight;
     int gears;
 
 
+
+
+
     };
 
 class Motorized : public Vehicle {
-
-    friend istream& operator>>(istream&, Motorized&);
-    friend istream& operator<<(ostream&, Motorized&);
 
 public:
 
@@ -66,6 +113,45 @@ public:
               Vehicle(Rented, Taken, HP, brandName, price), fuelRating(Fuel) {}
     double finalPrice() const override;
     virtual double fuelCost() const;
+
+        virtual void print(ostream& out)
+{
+        {
+            cout<<"Type: Petrol Car"<<endl;
+
+            out<<"Number of times Taken "<<timesTaken<<endl;
+            out<<"Health "<<health<<endl;
+            out<<"Brand "<<Brand<<endl;
+            out<<"Fuel Rating"<<Fuel<<endl;
+        }
+
+            virtual void read(istream& in, Bike& C)
+        {
+            cout<<"Insert Petrol Car data"<<endl;
+
+                cout<<"Is the Car Rented: ";in>>C.isRented;in.get();
+                cout<<"How many times the Car was taken: ";in>>C.timesTaken;in.get();
+                cout<<"Car Health: ";in>>C.health;in.get();
+                cout<<"Car Brand: ";in>>C.brand;in.get();
+                cout<<"Fuel Rating: ";in>>C.weight;in.get();
+
+        return in;
+        }
+
+
+        friend ostream& operator<<(ostream& out, Motorized& M)
+    {
+        M.print(out);
+        return out;
+    }
+        friend istream& operator<<(istream& out, Motorized& M)
+    {
+        M.read(in);
+        return in;
+    }
+
+
+}
 
 protected:
 
@@ -77,9 +163,6 @@ protected:
 
 class Electric : public Motorized{
 
-    friend istream& operator>>(istream&, Electric&);
-    friend istream& operator<<(ostream&, Electric&);
-
 public:
 
     Electric() = default;
@@ -89,16 +172,51 @@ public:
     double finalPrice() const override;
     virtual double fuelCost() const override;
 
+        virtual void print(ostream& out)
+{
+        {
+            cout<<"Type: Electric Car"<<endl;
+
+            out<<"Number of times Taken "<<timesTaken<<endl;
+            out<<"Health "<<health<<endl;
+            out<<"Brand "<<Brand<<endl;
+            out<<"Fuel Rating"<<Fuel<<endl;
+        }
+
+                    virtual void read(istream& in, Bike& C)
+        {
+            cout<<"Insert Petrol Car data"<<endl;
+
+                cout<<"Is the Car Rented: ";in>>C.isRented;in.get();
+                cout<<"How many times the Car was taken: ";in>>C.timesTaken;in.get();
+                cout<<"Car Health: ";in>>C.health;in.get();
+                cout<<"Car Brand: ";in>>C.brand;in.get();
+                cout<<"Fuel Rating: ";in>>C.weight;in.get();
+
+        return in;
+        }
+
+        friend ostream& operator<<(ostream& out, Electric& M)
+    {
+        M.print(out);
+        return out;
+    }
+        friend istream& operator<<(istream& out, Electric& M)
+    {
+        M.read(in);
+        return in;
+    }
+
+}
+
 };
-
-
-
-
 
 
 
 int main()
 {
-    cout << "Hello world!" << endl;
-    return 0;
+    vector<shared_ptr<Vehicle>> Vehicles;
+
+
+
 }
