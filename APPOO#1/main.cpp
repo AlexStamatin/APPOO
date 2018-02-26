@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <random>
+#include <memory>
 
 using namespace std;
 
@@ -10,14 +11,16 @@ std::default_random_engine generator;
 std::uniform_int_distribution<int> distribution(1,chance);
 int dice_roll = distribution(generator);
 
-if (dice_roll == chance) {return true ;}
-else {return false;}
+if (dice_roll == chance)
+    {return true ;}
+else
+    {return false;}
 }
 
 
 class Unit{
 
-private:
+protected:
     int HP;
     int DPS;
 
@@ -28,28 +31,28 @@ public:
     virtual string getClass() = 0;
     float currentHP () {return HP;}
     virtual int getMaxHP () = 0 ;
-    virtual void print(ostream& out){}
     friend ostream& operator<<(ostream& out, Unit& U)
     {U.print(out);return out;}
-    virtual void print(ostream&out){
-    cout<<"Unit: "<<getClass()<<endl;
-    cout<<"HP: "<<currentHP()<<endl;
+    void print(ostream&out){
+    out<<"Unit: "<<getClass()<<endl;
+    out<<"HP: "<<currentHP()<<endl;
     }
+    Unit(int HP, int DPS):HP(HP),DPS(DPS){}
 };
 
 
 
 
-};
+
 
 class Knight: public Unit {
 
 private:
-    static int maxHP = 500;
-    static int blockChance = 3;
+    static int const maxHP = 500;
+    static int const blockChance = 3;
 
     virtual void takeDamage(int dmg) override {
-        if getRand(blockChance) {this->HP -= 0.5*dmg;}
+        if (getRand(blockChance)) {this->HP -= 0.5*dmg;}
         else {this->HP -= dmg;}
 
     }
@@ -68,7 +71,7 @@ private:
 
 
 public:
-    Knight():HP(this.getMaxHP()),DPS(50){}
+    Knight():Unit(this->getMaxHP(),50){}
     friend ostream& operator<<(ostream& out, Knight& U)
     {U.print(out);return out;}
 
@@ -80,22 +83,20 @@ public:
 class Blademaster: public Unit{
 
 private:
-    static int maxHP;
-    static int critChance = 3;
-    static int critMulti = 2;
+    static int const maxHP;
+    static int const critChance = 3;
+    static int const critMulti = 2;
 
     virtual void takeDamage(int dmg) override
     {this->HP -= dmg;}
 
-    }
+
 
     virtual float atack() override{
 
-    if getRand(critChance) {return critMulti * DPS; }
+    if (getRand(critChance)) {return critMulti * DPS; }
     else {return DPS;}
     }
-
-        return DPS;
 
 
     virtual string getClass() override {
@@ -108,21 +109,48 @@ private:
 
 
 public:
-    Blademaster():HP(this.getMaxHP()),DPS(50){}
-        friend ostream& operator<<(ostream& out, Knight& U)
+    Blademaster():Unit(this->getMaxHP(),50){}
+    friend ostream& operator<<(ostream& out, Blademaster& U)
     {U.print(out);return out;}
 
 
 
 };
 
-class Army
+class Army{
+protected:
+     vector<shared_ptr<Unit>> Units {} ;
 
+public:
+
+    void addUnit(const shared_ptr<Unit> &U)
+    {
+     this->Units.push_back(U);
+    }
+
+friend ostream& operator<<(ostream& out, Army& A)
+{
+for (auto i : A.Units)
+{
+out<<*i;
+}
+return out;
+};
+
+Army() = default;
+};
 
 
 
 int main()
 {
-    cout << "Hello world!" << endl;
-    return 0;
+   Army ArmyU1;
+   ArmyU1.addUnit(make_shared<Knight>());
+      ArmyU1.addUnit(make_shared<Knight>());
+         ArmyU1.addUnit(make_shared<Knight>());
+            ArmyU1.addUnit(make_shared<Knight>());
+   Knight K1;
+   cout<<ArmyU1<<endl;
+   return 0;
 }
+
