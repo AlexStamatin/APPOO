@@ -9,7 +9,7 @@ std::default_random_engine generator;
 
 bool getRand(int chance ){
 
-int range = chance;
+
 std::uniform_int_distribution<int> distribution(1,chance);
 int dice_roll = distribution(generator);
 if (dice_roll == chance)
@@ -151,10 +151,81 @@ for (auto i : this->Units)
 {
 (*i).printBuy(); cout<<"---"; cout<<endl;
 }
+};
+
+bool isAlive(){
+    for (auto i : this->Units)
+{
+if ((*i).currentHP() > 0) {return true;}
 }
+return false;
+}
+
+void update(){
+auto i = begin(this->Units);
+while (i != end(this->Units)){
+    if ((**i).currentHP() <= 0)
+    {
+        i=this->Units.erase(i);
+    }
+    else{
+        ++i;
+    }
+}
+}
+
+float totalDmg ()
+{
+float total = 0;
+for (auto i : this->Units)
+{
+total += (*i).atack();
+}
+return total;
+}
+
+void takeDmg(int dmg){
+auto i = *(this->Units.end()-1);
+(*i).takeDamage(dmg);
+}
+
 
 Army() = default;
 };
+
+int fight(Army& A1, Army& A2)
+{
+    float dmg1,dmg2;
+
+    while (true)
+    {
+        dmg1 = A1.totalDmg();
+        dmg2 = A2.totalDmg();
+        A1.takeDmg(dmg2);
+        A2.takeDmg(dmg1);
+        A1.update();
+        A2.update();
+        cout<<"---------"<<endl;
+        cout<<"Current situation on the battlefield"<<endl;
+        cout<<A1<<endl;
+        cout<<A2<<endl;
+
+        if (!A1.isAlive() and !A2.isAlive())
+        {
+            return 1;
+        }
+        if (!A1.isAlive())
+        {
+            return 2;
+        }
+        if (!A2.isAlive())
+        {
+            return 3;
+        }
+
+
+    }
+}
 
 void armyBuild(Army&A,Army& Sample, int& Gold)
 {
@@ -202,6 +273,7 @@ void autoBuild(Army& A, int Gold)
 int main()
 {
    int Gold = 300;
+   int rez;
    Army ArmyU1;
    Army ArmyU2;
    Army sampleArmy;
@@ -216,6 +288,20 @@ int main()
    cout<<ArmyU1<<endl;
    cout<<"Enemy Army: "<<endl;
    cout<<ArmyU2<<endl;
+   rez=fight(ArmyU1, ArmyU2);
+   if(rez == 1)
+   {
+       cout<<"It's a draw"<<endl;
+   }
+   else if(rez == 2)
+   {
+       cout<<"You lost"<<endl;
+   }
+
+   else if (rez == 3)
+   {
+       cout<<"Congratulations"<<endl;
+   }
    cin.get();
    return 0;
 
