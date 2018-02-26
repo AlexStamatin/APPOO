@@ -5,14 +5,15 @@
 
 using namespace std;
 
-bool getRand(int chance){
-
 std::default_random_engine generator;
+
+bool getRand(int chance ){
+
+int range = chance;
 std::uniform_int_distribution<int> distribution(1,chance);
 int dice_roll = distribution(generator);
-
 if (dice_roll == chance)
-    {return true ;}
+    {return true;}
 else
     {return false;}
 }
@@ -23,6 +24,7 @@ class Unit{
 protected:
     int HP;
     int DPS;
+    int Cost;
 
 
 public:
@@ -30,6 +32,7 @@ public:
     virtual float atack() = 0;
     virtual string getClass() = 0;
     float currentHP () {return HP;}
+    int getCost () {return Cost;}
     virtual int getMaxHP () = 0 ;
     friend ostream& operator<<(ostream& out, Unit& U)
     {U.print(out);return out;}
@@ -37,7 +40,12 @@ public:
     out<<"Unit: "<<getClass()<<endl;
     out<<"HP: "<<currentHP()<<endl;
     }
-    Unit(int HP, int DPS):HP(HP),DPS(DPS){}
+    void printBuy(){
+    cout<<"Unit: "+getClass();cout<<endl;cout<<"Cost: ";
+    cout<<getCost();cout<<endl;
+
+    }
+    Unit(int HP, int DPS, int Cost):HP(HP),DPS(DPS),Cost(Cost){}
 };
 
 
@@ -71,7 +79,7 @@ private:
 
 
 public:
-    Knight():Unit(this->getMaxHP(),50){}
+    Knight():Unit(this->getMaxHP(),50,100){}
     friend ostream& operator<<(ostream& out, Knight& U)
     {U.print(out);return out;}
 
@@ -83,7 +91,7 @@ public:
 class Blademaster: public Unit{
 
 private:
-    static int const maxHP;
+    static int const maxHP = 500;
     static int const critChance = 3;
     static int const critMulti = 2;
 
@@ -109,7 +117,7 @@ private:
 
 
 public:
-    Blademaster():Unit(this->getMaxHP(),50){}
+    Blademaster():Unit(this->getMaxHP(),50,100){}
     friend ostream& operator<<(ostream& out, Blademaster& U)
     {U.print(out);return out;}
 
@@ -137,20 +145,79 @@ out<<*i;
 return out;
 };
 
+void printBuy(){
+
+for (auto i : this->Units)
+{
+(*i).printBuy(); cout<<"---"; cout<<endl;
+}
+}
+
 Army() = default;
 };
 
+void armyBuild(Army&A,Army& Sample, int& Gold)
+{
+    int choice;
+    while (Gold > 0)
+    {
+        cout<<"-------------------------------------"<<endl;
+        cout<<"Current Army: "<<endl;cout<<A<<endl;
+        cout<<"Gold Available: "<<Gold<<endl;
+        cout<<"Units Available: "<<endl;
+        cout<<"---"<<endl;
+        Sample.printBuy();
+        cout<<"Select unit to add: "<<endl;
+        cin>>choice; cin.get();
+        if (choice==1)
+        {
+            A.addUnit(make_shared<Knight>());
+        }
+        else
+        {
+            A.addUnit(make_shared<Blademaster>());
+        }
+        Gold -= 100;
 
+
+    }
+    return;
+}
+
+void autoBuild(Army& A, int Gold)
+{
+    while (Gold>0){
+        if (getRand(2))
+    {
+        A.addUnit(make_shared<Knight>());
+    }
+        else
+    {
+        A.addUnit(make_shared<Blademaster>());
+    }
+        Gold -= 100;
+                  }
+}
 
 int main()
 {
+   int Gold = 300;
    Army ArmyU1;
-   ArmyU1.addUnit(make_shared<Knight>());
-      ArmyU1.addUnit(make_shared<Knight>());
-         ArmyU1.addUnit(make_shared<Knight>());
-            ArmyU1.addUnit(make_shared<Knight>());
-   Knight K1;
+   Army ArmyU2;
+   Army sampleArmy;
+   sampleArmy.addUnit(make_shared<Knight>());
+   sampleArmy.addUnit(make_shared<Blademaster>());
+   cout<<"Welcome to Fighting Tournament"<<endl;
+   cout<<"Build your Army"<<endl;
+   armyBuild(ArmyU1,sampleArmy,Gold);
+   autoBuild(ArmyU2,300);
+   cout<<"-------------------------------------"<<endl;
+   cout<<"Your army: "<<endl;
    cout<<ArmyU1<<endl;
+   cout<<"Enemy Army: "<<endl;
+   cout<<ArmyU2<<endl;
+   cin.get();
    return 0;
+
 }
 
