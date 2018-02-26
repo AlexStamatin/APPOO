@@ -2,13 +2,17 @@
 #include <string>
 #include <random>
 #include <memory>
+#include <chrono>
+#include <thread>
 
 using namespace std;
 
 std::default_random_engine generator;
 
-bool getRand(int chance ){
+bool getRand(int chance )
+{
 
+//Returns True 1 in chance times
 
 std::uniform_int_distribution<int> distribution(1,chance);
 int dice_roll = distribution(generator);
@@ -22,20 +26,22 @@ else
 class Unit{
 
 protected:
+
     int HP;
     int DPS;
     int Cost;
 
 
 public:
+
     virtual void takeDamage(int dmg) = 0;
     virtual float atack() = 0;
     virtual string getClass() = 0;
+    virtual int getMaxHP () = 0 ;
+
     float currentHP () {return HP;}
     int getCost () {return Cost;}
-    virtual int getMaxHP () = 0 ;
-    friend ostream& operator<<(ostream& out, Unit& U)
-    {U.print(out);return out;}
+
     void print(ostream&out){
     out<<"Unit: "<<getClass()<<endl;
     out<<"HP: "<<currentHP()<<endl;
@@ -45,6 +51,11 @@ public:
     cout<<getCost();cout<<endl;
 
     }
+
+    friend ostream& operator<<(ostream& out, Unit& U)
+    {U.print(out);return out;}
+
+
     Unit(int HP, int DPS, int Cost):HP(HP),DPS(DPS),Cost(Cost){}
 };
 
@@ -56,6 +67,7 @@ public:
 class Knight: public Unit {
 
 private:
+
     static int const maxHP = 500;
     static int const blockChance = 3;
 
@@ -80,6 +92,7 @@ private:
 
 public:
     Knight():Unit(this->getMaxHP(),50,100){}
+
     friend ostream& operator<<(ostream& out, Knight& U)
     {U.print(out);return out;}
 
@@ -91,6 +104,7 @@ public:
 class Blademaster: public Unit{
 
 private:
+
     static int const maxHP = 500;
     static int const critChance = 3;
     static int const critMulti = 2;
@@ -117,7 +131,9 @@ private:
 
 
 public:
+
     Blademaster():Unit(this->getMaxHP(),50,100){}
+
     friend ostream& operator<<(ostream& out, Blademaster& U)
     {U.print(out);return out;}
 
@@ -127,6 +143,7 @@ public:
 
 class Army{
 protected:
+
      vector<shared_ptr<Unit>> Units {} ;
 
 public:
@@ -138,37 +155,43 @@ public:
 
 friend ostream& operator<<(ostream& out, Army& A)
 {
-for (auto i : A.Units)
-{
-out<<*i;
-}
-return out;
+    for (auto i : A.Units)
+        {
+            out<<*i;
+        }
+    return out;
 };
 
-void printBuy(){
-
-for (auto i : this->Units)
+void printBuy()
 {
-(*i).printBuy(); cout<<"---"; cout<<endl;
-}
-};
 
-bool isAlive(){
     for (auto i : this->Units)
+        {
+            (*i).printBuy(); cout<<"---"; cout<<endl;
+        }
+};
+
+bool isAlive()
 {
-if ((*i).currentHP() > 0) {return true;}
-}
-return false;
+    for (auto i : this->Units)
+    {
+        if ((*i).currentHP() > 0)
+            {return true;}
+    }
+        return false;
 }
 
-void update(){
+void update()
+{
 auto i = begin(this->Units);
-while (i != end(this->Units)){
+while (i != end(this->Units))
+    {
     if ((**i).currentHP() <= 0)
     {
         i=this->Units.erase(i);
     }
-    else{
+    else
+    {
         ++i;
     }
 }
@@ -207,8 +230,11 @@ int fight(Army& A1, Army& A2)
         A2.update();
         cout<<"---------"<<endl;
         cout<<"Current situation on the battlefield"<<endl;
+        cout<<"Your Army: "<<endl;
         cout<<A1<<endl;
+        cout<<"Enemy Army: "<<endl;
         cout<<A2<<endl;
+        std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 
         if (!A1.isAlive() and !A2.isAlive())
         {
@@ -288,6 +314,8 @@ int main()
    cout<<ArmyU1<<endl;
    cout<<"Enemy Army: "<<endl;
    cout<<ArmyU2<<endl;
+   cout<<"Press Enter to attack enemy army"<<endl;
+   cin.get();
    rez=fight(ArmyU1, ArmyU2);
    if(rez == 1)
    {
@@ -300,7 +328,7 @@ int main()
 
    else if (rez == 3)
    {
-       cout<<"Congratulations"<<endl;
+       cout<<"Congratulations! You Win !"<<endl;
    }
    cin.get();
    return 0;
