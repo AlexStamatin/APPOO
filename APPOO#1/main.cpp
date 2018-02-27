@@ -7,14 +7,14 @@
 
 using namespace std;
 
-std::default_random_engine generator;
+default_random_engine generator;
 
 bool getRand(int chance )
 {
 
 //Returns True 1 in chance times
 
-std::uniform_int_distribution<int> distribution(1,chance);
+uniform_int_distribution<int> distribution(1,chance);
 int dice_roll = distribution(generator);
 if (dice_roll == chance)
     {return true;}
@@ -57,6 +57,7 @@ public:
 
 
     Unit(int HP, int DPS, int Cost):HP(HP),DPS(DPS),Cost(Cost){}
+    Unit() = default;
 };
 
 
@@ -70,7 +71,7 @@ private:
 
     static int const maxHP = 500;
     static int const blockChance = 3;
-
+public:
     virtual void takeDamage(int dmg) override {
         if (getRand(blockChance)) {this->HP -= 0.5*dmg;}
         else {this->HP -= dmg;}
@@ -90,8 +91,9 @@ private:
     }
 
 
-public:
+
     Knight():Unit(this->getMaxHP(),50,100){}
+
 
     friend ostream& operator<<(ostream& out, Knight& U)
     {U.print(out);return out;}
@@ -108,7 +110,7 @@ private:
     static int const maxHP = 500;
     static int const critChance = 3;
     static int const critMulti = 2;
-
+public:
     virtual void takeDamage(int dmg) override
     {this->HP -= dmg;}
 
@@ -128,9 +130,6 @@ private:
     virtual int getMaxHP()override {
     return maxHP;
     }
-
-
-public:
 
     Blademaster():Unit(this->getMaxHP(),50,100){}
 
@@ -305,7 +304,7 @@ int main()
    Army sampleArmy;
    sampleArmy.addUnit(make_shared<Knight>());
    sampleArmy.addUnit(make_shared<Blademaster>());
-   cout<<"Welcome to Fighting Tournament"<<endl;
+   cout<<"Welcome to Bloody Tournament"<<endl;
    cout<<"Build your Army"<<endl;
    armyBuild(ArmyU1,sampleArmy,Gold);
    autoBuild(ArmyU2,300);
