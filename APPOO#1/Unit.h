@@ -1,33 +1,37 @@
 #ifndef Unit_H
 #define Unit_H
 #include <string>
-
+#include "Vulnerable.h"
+#include "Buyable.h"
+#include "Atacking.h"
 
 using namespace std;
 
-class Unit{
+class Unit: public IVulnerable,public IBuyable{
 
 protected:
-
-    int HP;
-    int DPS;
     int Cost;
-
+    int HP;
 
 public:
 
-    virtual void takeDamage(int dmg) = 0;
-    virtual float atack() = 0;
     virtual string getClass() = 0;
-    virtual int getMaxHP () = 0 ;
 
     float currentHP () {return HP;}
-    int getCost () {return Cost;}
 
     void print(ostream&out){
     out<<"Unit: "<<getClass()<<endl;
     out<<"HP: "<<currentHP()<<endl;
     }
+
+    void Heal(int Healed) {
+    this->HP += Healed;}
+
+    virtual int getCost () {return Cost;}
+
+    void incCost (float incCost) {this->Cost += this->Cost*incCost;}
+    void decCost (float decCost) {this->Cost -= this->Cost*decCost;}
+
     void printBuy(){
     cout<<"Unit: "+getClass();cout<<endl;cout<<"Cost: ";
     cout<<getCost();cout<<endl;
@@ -38,7 +42,7 @@ public:
     {U.print(out);return out;}
 
 
-    Unit(int HP, int DPS, int Cost):HP(HP),DPS(DPS),Cost(Cost){}
+    Unit(int HP,int Cost):HP(HP),Cost(Cost){}
     Unit() = default;
 };
 

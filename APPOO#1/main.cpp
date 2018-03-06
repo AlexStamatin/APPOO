@@ -8,6 +8,7 @@
 #include "Knight.h"
 #include "Blademaster.h"
 #include "Army.h"
+#include "Vulnerable.h"
 
 
 using namespace std;

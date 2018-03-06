@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 65321a34c77bc6f4accb4545141a3491d3af267d
 #ifndef Peasant_H
 #define Peasant_H
 #include "Unit.h"
@@ -17,9 +20,12 @@ public:
     virtual string getClass() override { return "Peasant";}
     virtual int getMaxHP()override { return maxHP; }
 
+<<<<<<< HEAD
     virtual float atack() override {
     return 0;}
 
+=======
+>>>>>>> 65321a34c77bc6f4accb4545141a3491d3af267d
     friend ostream& operator<<(ostream& out, Peasant& U)
     {U.print(out);return out;}
 
