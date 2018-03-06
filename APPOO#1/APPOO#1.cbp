@@ -33,9 +33,14 @@
 			<Add option="-fexceptions" />
 		</Compiler>
 		<Unit filename="Army.h" />
+		<Unit filename="AtackUnit.h" />
+		<Unit filename="Atacking.h" />
 		<Unit filename="Blademaster.h" />
+		<Unit filename="Buyable.h" />
+		<Unit filename="DisarmedUnit.h" />
 		<Unit filename="Knight.h" />
 		<Unit filename="Unit.h" />
+		<Unit filename="Vulnerable.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
