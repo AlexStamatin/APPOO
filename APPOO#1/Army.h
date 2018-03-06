@@ -9,11 +9,11 @@ using namespace std;
 class Army{
 protected:
 
-     vector<shared_ptr<Unit>> Units {} ;
+     vector<shared_ptr<AtackUnit>> Units {} ;
 
 public:
 
-    void addUnit(const shared_ptr<Unit> &U)
+    void addUnit(const shared_ptr<AtackUnit> &U)
     {
      this->Units.push_back(U);
     }
