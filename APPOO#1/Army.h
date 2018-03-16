@@ -1,24 +1,25 @@
 #ifndef Army_H
 #define Army_H
 #include <string>
+#include "ArmyStatus.h"
 
 
 
 using namespace std;
 
-class Army{
+class Army: public IArmyStatus{
 protected:
 
      vector<shared_ptr<AtackUnit>> Units {} ;
 
 public:
 
-    void addUnit(const shared_ptr<AtackUnit> &U)
+    virtual void addUnit(const shared_ptr<AtackUnit> &U) override
     {
      this->Units.push_back(U);
     }
 
-friend ostream& operator<<(ostream& out, Army& A)
+ friend ostream& operator<<(ostream& out, Army& A)
 {
     for (auto i : A.Units)
         {
@@ -27,16 +28,16 @@ friend ostream& operator<<(ostream& out, Army& A)
     return out;
 };
 
-void printBuy()
+/*void printBuy()
 {
 
     for (auto i : this->Units)
         {
             (*i).printBuy(); cout<<"---"; cout<<endl;
         }
-};
+}; */
 
-bool isAlive()
+virtual bool isAlive() override
 {
     for (auto i : this->Units)
     {

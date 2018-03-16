@@ -2,6 +2,7 @@
 #define AtackUnit_H
 #include "Unit.h"
 #include "Atacking.h"
+#include "Unit.cpp"
 
 using namespace std;
 
@@ -15,8 +16,8 @@ public:
     void incDPS(float incDPS) {this->DPS += this->DPS*incDPS;}
     void decDPS(float decDPS) {this->DPS -= this->DPS*decDPS;}
 
-    friend ostream& operator<<(ostream& out, AtackUnit& U)
-    {U.print(out);return out;}
+  /*  friend ostream& operator<<(ostream& out, AtackUnit& U)
+    {U.print(out);return out;} */
 
     AtackUnit(int HP, int Cost, int DPS):Unit(HP,Cost),DPS(DPS){}
     AtackUnit() = default;

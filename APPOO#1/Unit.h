@@ -4,6 +4,7 @@
 #include "Vulnerable.h"
 #include "Buyable.h"
 #include "Atacking.h"
+#include "Printable.h"
 
 using namespace std;
 
@@ -17,33 +18,21 @@ public:
 
     virtual string getClass() = 0;
 
-    float currentHP () {return HP;}
+    float currentHP ();
 
-    void print(ostream&out){
-    out<<"Unit: "<<getClass()<<endl;
-    out<<"HP: "<<currentHP()<<endl;
-    }
+    void Heal(int Healed);
 
-    void Heal(int Healed) {
-    this->HP += Healed;}
+    virtual int getCost ();
 
-    virtual int getCost () {return Cost;}
-
-    void incCost (float incCost) {this->Cost += this->Cost*incCost;}
-    void decCost (float decCost) {this->Cost -= this->Cost*decCost;}
-
-    void printBuy(){
-    cout<<"Unit: "+getClass();cout<<endl;cout<<"Cost: ";
-    cout<<getCost();cout<<endl;
-
-    }
-
-    friend ostream& operator<<(ostream& out, Unit& U)
-    {U.print(out);return out;}
+    void incCost (float incCost);
+    void decCost (float decCost);
 
 
-    Unit(int HP,int Cost):HP(HP),Cost(Cost){}
-    Unit() = default;
+    friend ostream& operator<<(ostream& out, Unit& U);
+
+
+    Unit(int HP,int Cost);
+    Unit();
 };
 
 

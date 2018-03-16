@@ -44,8 +44,8 @@ public:
 
 
 
-    friend ostream& operator<<(ostream& out, Knight& U)
-    {U.print(out);return out;}
+  /*  friend ostream& operator<<(ostream& out, Knight& U)
+    {U.print(out);return out;} */
 
 
 };

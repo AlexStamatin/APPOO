@@ -39,8 +39,8 @@ public:
 
     Blademaster():AtackUnit(this->getMaxHP(),this->getBaseDPS(),100){}
 
-    friend ostream& operator<<(ostream& out, Blademaster& U)
-    {U.print(out);return out;}
+ /*   friend ostream& operator<<(ostream& out, Blademaster& U)
+    {U.print(out);return out;} */
 
 
 

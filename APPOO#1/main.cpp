@@ -77,7 +77,7 @@ void armyBuild(Army&A,Army& Sample, int& Gold)
         cout<<"Gold Available: "<<Gold<<endl;
         cout<<"Units Available: "<<endl;
         cout<<"---"<<endl;
-        Sample.printBuy();
+//        Sample.printBuy();
         cout<<"Select unit to add: "<<endl;
         cin>>choice; cin.get();
         if (choice==1)
