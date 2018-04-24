@@ -9,6 +9,7 @@
 #include "Blademaster.h"
 #include "Army.h"
 #include "Vulnerable.h"
+#include "Building.h"
 
 
 using namespace std;
@@ -70,6 +71,7 @@ int fight(Army& A1, Army& A2)
 void armyBuild(Army&A,Army& Sample, int& Gold)
 {
     int choice;
+    Building build;
     while (Gold > 0)
     {
         cout<<"-------------------------------------"<<endl;
@@ -86,7 +88,7 @@ void armyBuild(Army&A,Army& Sample, int& Gold)
         }
         else
         {
-            A.addUnit(make_shared<Blademaster>());
+            A.addUnit(build.train(1));
         }
         Gold -= 100;
 

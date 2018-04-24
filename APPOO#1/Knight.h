@@ -1,6 +1,7 @@
 #ifndef Knight_H
 #define Knight_H
 #include <string>
+#include <chrono>
 #include "AtackUnit.h"
 
 using namespace std;
@@ -42,7 +43,11 @@ public:
 
     Knight():AtackUnit(this->getMaxHP(),this->getBaseDPS(),100){}
 
+    static shared_ptr<Knight> spawn(int delay){
+    std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+    return make_shared<Knight>();
 
+    }
 
   /*  friend ostream& operator<<(ostream& out, Knight& U)
     {U.print(out);return out;} */

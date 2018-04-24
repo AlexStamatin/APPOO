@@ -1,9 +1,11 @@
 #ifndef Blademaster_H
 #define Blademaster_H
 #include <string>
+#include <chrono>
 #include "AtackUnit.h"
 
 using namespace std;
+
 
 
 class Blademaster: public AtackUnit{
@@ -35,6 +37,12 @@ public:
 
     virtual int getMaxHP()override {
     return maxHP;
+    }
+
+    static shared_ptr<Blademaster> spawn(int delay){
+    std::this_thread::sleep_for(std::chrono::milliseconds(delay));
+    return make_shared<Blademaster>();
+
     }
 
     Blademaster():AtackUnit(this->getMaxHP(),this->getBaseDPS(),100){}
