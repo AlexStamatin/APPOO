@@ -27,16 +27,16 @@ public:
         }
     return out;
 };
-
-/*void printBuy()
+/*
+void printBuy()
 {
 
     for (auto i : this->Units)
         {
-            (*i).printBuy(); cout<<"---"; cout<<endl;
+            (*i).print(); cout<<"---"; cout<<endl;
         }
-}; */
-
+};
+*/
 virtual bool isAlive() override
 {
     for (auto i : this->Units)

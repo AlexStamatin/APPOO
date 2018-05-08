@@ -8,7 +8,7 @@ using namespace std;
 
 bool getRand(int chance );
 
-class Knight: public AtackUnit {
+class Knight: public AtackUnit{
 
 private:
 
@@ -43,7 +43,7 @@ public:
 
     Knight():AtackUnit(this->getMaxHP(),this->getBaseDPS(),100){}
 
-    static shared_ptr<Knight> spawn(int delay){
+    virtual shared_ptr<ISpawnable> spawn(int delay){
     std::this_thread::sleep_for(std::chrono::milliseconds(delay));
     return make_shared<Knight>();
 

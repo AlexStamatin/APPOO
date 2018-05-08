@@ -5,7 +5,7 @@
 #include "Buyable.h"
 #include "Atacking.h"
 #include "Printable.h"
-
+#include "Spawnable.h"
 using namespace std;
 
 class Unit: public IVulnerable,public IBuyable{

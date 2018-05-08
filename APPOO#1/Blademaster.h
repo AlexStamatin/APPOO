@@ -39,12 +39,11 @@ public:
     return maxHP;
     }
 
-    static shared_ptr<Blademaster> spawn(int delay){
+    virtual shared_ptr<ISpawnable> spawn(int delay) override{
     std::this_thread::sleep_for(std::chrono::milliseconds(delay));
     return make_shared<Blademaster>();
 
     }
-
     Blademaster():AtackUnit(this->getMaxHP(),this->getBaseDPS(),100){}
 
  /*   friend ostream& operator<<(ostream& out, Blademaster& U)

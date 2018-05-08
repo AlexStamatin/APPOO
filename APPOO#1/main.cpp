@@ -10,6 +10,7 @@
 #include "Army.h"
 #include "Vulnerable.h"
 #include "Building.h"
+#include "Shrine.h"
 
 
 using namespace std;
@@ -71,7 +72,8 @@ int fight(Army& A1, Army& A2)
 void armyBuild(Army&A,Army& Sample, int& Gold)
 {
     int choice;
-    Building build;
+    Blademaster blade;
+    Building build(100,blade);
     while (Gold > 0)
     {
         cout<<"-------------------------------------"<<endl;
@@ -88,7 +90,7 @@ void armyBuild(Army&A,Army& Sample, int& Gold)
         }
         else
         {
-            A.addUnit(build.train(1));
+            A.addUnit(dynamic_pointer_cast<Blademaster>(build.train(1)));
         }
         Gold -= 100;
 
@@ -114,6 +116,7 @@ void autoBuild(Army& A, int Gold)
 
 int main()
 {
+
    int Gold = 300;
    int rez;
    Army ArmyU1;
@@ -149,5 +152,10 @@ int main()
    cin.get();
    return 0;
 
+  /*  Blademaster Blade;
+    cout<<"DPS1 "<<Blade.DPS;
+    Shrine Sh;
+    Sh.lvlup(Blade);
+    cout<<"DPS2 "<<Blade.DPS; */
 }
 

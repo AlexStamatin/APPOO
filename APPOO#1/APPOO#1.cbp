@@ -37,10 +37,15 @@
 		<Unit filename="AtackUnit.h" />
 		<Unit filename="Atacking.h" />
 		<Unit filename="Blademaster.h" />
+		<Unit filename="Building.h" />
 		<Unit filename="Buyable.h" />
+		<Unit filename="ChaosTower.h" />
+		<Unit filename="DPSStructure.h" />
 		<Unit filename="DisarmedUnit.h" />
 		<Unit filename="Knight.h" />
 		<Unit filename="Printable.h" />
+		<Unit filename="Spawnable.h" />
+		<Unit filename="Tower.h" />
 		<Unit filename="Unit.h" />
 		<Unit filename="UnitPrint.cpp">
 			<Option compile="0" />
