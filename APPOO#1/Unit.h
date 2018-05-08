@@ -27,6 +27,7 @@ public:
     void incCost (float incCost);
     void decCost (float decCost);
 
+    virtual void lvlup() = 0;
 
     friend ostream& operator<<(ostream& out, Unit& U);
 

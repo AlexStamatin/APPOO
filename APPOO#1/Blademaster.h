@@ -30,6 +30,9 @@ public:
     else {return BaseDPS;}
     }
 
+    virtual void lvlup() override{
+    this->DPS += 20;
+    }
 
     virtual string getClass() override {
     return "Blademaster";

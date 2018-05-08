@@ -13,16 +13,7 @@ public:
 
     void lvlup(AtackUnit& Unit){
 
-    if (Unit.getClass() == "Knight"){
-
-        Unit.Cost -= 10;
-    }
-
-    else if (Unit.getClass() == "Blademaster"){
-
-        Unit.DPS += 20;
-    }
-
+    Unit.lvlup();
     }
 
 

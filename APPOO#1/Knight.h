@@ -39,6 +39,10 @@ public:
     return maxHP;
     }
 
+    virtual void lvlup()override {
+    this->Cost -= 10;
+    }
+
 
 
     Knight():AtackUnit(this->getMaxHP(),this->getBaseDPS(),100){}
